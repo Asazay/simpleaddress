@@ -1,35 +1,107 @@
-import { useState } from 'react'
+import {useState} from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [name, setName] = useState('')
+    const [address, setAddress] = useState('')
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('')
+    const [zipCode, setZipCode] = useState('')
+    const [phone, setPhone] = useState('')
+    const [addressBook, setAddressBook] = useState({})
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    const addAddress = () => {
+        const newAddress = {
+            name,
+            address,
+            city,
+            state,
+            zipCode,
+            phone,
+        }
+
+        const newAddressBook = {...addressBook}
+
+        if(phone && !newAddressBook[phone]){
+            newAddressBook[phone] = newAddress
+
+            setAddressBook(newAddressBook)
+            setName('')
+            setAddress('')
+            setCity('')
+            setState('')
+            setZipCode('')
+            setPhone('')
+        }
+
+        else alert('A contact with that number already exists. Try again.')
+    }
+
+    const deleteContact = (phoneNumber) => {
+        const newAddressBook = {...addressBook}
+        if(newAddressBook && newAddressBook[phoneNumber]) {
+            delete newAddressBook[phoneNumber]
+
+            setAddressBook(newAddressBook)
+        }
+    }
+
+    return (
+        <>
+            <h1>Simple Address Book App</h1>
+            <div>
+                <div>
+                    <label>
+                        Name:
+                    </label>
+                    <input value={name} onChange={e => setName(e.target.value)}/>
+                </div>
+                <div>
+                    <label>Address: </label>
+                    <input value={address} onChange={e => setAddress(e.target.value)}/>
+                </div>
+                <div>
+                    <label>City: </label>
+                    <input value={city} onChange={e => setCity(e.target.value)}/>
+                </div>
+                <div>
+                    <label>State: </label>
+                    <input value={state} onChange={e => setState(e.target.value)}/>
+                </div>
+                <div>
+                    <label>Zip code: </label>
+                    <input value={zipCode} onChange={e => setZipCode(e.target.value)}/>
+                </div>
+                <div>
+                    <label>Phone: </label>
+                    <input value={phone} onChange={e => setPhone(e.target.value)}/>
+                </div>
+            </div>
+            <button onClick={() => addAddress()}>Add to Address Book</button>
+            <div style={{backgroundColor: '#555555', padding: '10px', margin: '10px'}}>
+                <h2>Address Book</h2>
+                <ol>
+                    {addressBook && Object.values(addressBook).length > 0 && Object.values(addressBook).map(contact => {
+                        return (
+                            <li key={contact.phone} style={{border: 'solid black 3px', margin: '5px'}}>
+                                <div>
+                                    name: {contact.name}<br/>
+                                    address: {contact.address}<br/>
+                                    city: {contact.city}<br/>
+                                    state: {contact.state}<br/>
+                                    zip code: {contact.zipCode}<br/>
+                                    phone number: {contact.phone}
+                                </div>
+                                <button onClick={() => deleteContact(contact.phone)}>Delete Contact</button>
+                            </li>
+                        )
+                    })}
+                </ol>
+            </div>
+        </>
+    )
 }
 
 export default App
