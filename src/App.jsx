@@ -1,6 +1,4 @@
 import {useState} from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
@@ -76,7 +74,6 @@ function App() {
     const toggleUpdate = (contact) => {
         // const theContact = document.getElementById(contact.phone);
         document.getElementById('update').classList.toggle('show');
-        let theDiv = document.getElementsByClassName('form-container');
         if(contact){
             setUpdateName(contact.name)
             setUpdateAddress(contact.address)
@@ -127,15 +124,15 @@ function App() {
                         return (
                             <li key={contact.phone} id={contact.phone} style={{border: 'solid black 3px', margin: '5px'}}>
                                 <div>
-                                    name: {contact.name}<br/>
-                                    address: {contact.address}<br/>
-                                    city: {contact.city}<br/>
-                                    state: {contact.state}<br/>
-                                    zip code: {contact.zipCode}<br/>
-                                    phone number: {contact.phone}
+                                    Name: {contact.name}<br/>
+                                    Address: {contact.address}<br/>
+                                    City: {contact.city}<br/>
+                                    State: {contact.state}<br/>
+                                    Zip code: {contact.zipCode}<br/>
+                                    Phone: {contact.phone}
                                 </div>
                                 <button onClick={() => deleteContact(contact.phone)}>Delete Contact</button>
-                                <button onClick={() => toggleUpdate(contact)}>Update</button>
+                                <button onClick={() => toggleUpdate(contact)}>Update Contact</button>
                             </li>
                         )
                     })}
@@ -144,7 +141,7 @@ function App() {
             <div id='update'
                  className="update-contact">
                 <div className="popup-box">
-                    <h2 style={{color: 'red'}}>Popup Form</h2>
+                    <h2 style={{color: 'white'}}>Update Contact</h2>
                     <div className="form-container">
                         <div>
                             <label>
