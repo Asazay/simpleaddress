@@ -50,7 +50,7 @@ function App() {
 
     return (
         <>
-            <h1>Simple Address Book App</h1>
+            <h1>Simple Frontend Address Book App</h1>
             <div>
                 <div>
                     <label>
