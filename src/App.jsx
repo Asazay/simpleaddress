@@ -12,6 +12,14 @@ function App() {
     const [phone, setPhone] = useState('')
     const [addressBook, setAddressBook] = useState({})
 
+    const [oldPhone, setOldPhone] = useState('')
+    const [updateName, setUpdateName] = useState('')
+    const [updateAddress, setUpdateAddress] = useState('')
+    const [updateCity, setUpdateCity] = useState('');
+    const [updateState, setUpdateState] = useState('')
+    const [updateZipCode, setUpdateZipCode] = useState('')
+    const [updatePhone, setUpdatePhone] = useState('')
+
     const addAddress = () => {
         const newAddress = {
             name,
@@ -24,7 +32,7 @@ function App() {
 
         const newAddressBook = {...addressBook}
 
-        if(phone && !newAddressBook[phone]){
+        if (phone && !newAddressBook[phone]) {
             newAddressBook[phone] = newAddress
 
             setAddressBook(newAddressBook)
@@ -34,18 +42,51 @@ function App() {
             setState('')
             setZipCode('')
             setPhone('')
-        }
-
-        else alert('A contact with that number already exists. Try again.')
+        } else alert('A contact with that number already exists. Try again.')
     }
 
     const deleteContact = (phoneNumber) => {
         const newAddressBook = {...addressBook}
-        if(newAddressBook && newAddressBook[phoneNumber]) {
+        if (newAddressBook && newAddressBook[phoneNumber]) {
             delete newAddressBook[phoneNumber]
 
             setAddressBook(newAddressBook)
         }
+    }
+
+    const updateContact = (contact) => {
+        console.log(contact)
+        const newAddressBook = {...addressBook}
+        if(contact && newAddressBook && oldPhone){
+            newAddressBook[contact.oldPhone] = {
+                name: contact.updateName,
+                address: contact.updateAddress,
+                city: contact.updateCity,
+                state: contact.updateState,
+                zipCode: contact.updateZipCode,
+                phone: contact.updatePhone
+
+            }
+            setAddressBook(newAddressBook)
+            toggleUpdate()
+        }
+
+    }
+
+    const toggleUpdate = (contact) => {
+        // const theContact = document.getElementById(contact.phone);
+        document.getElementById('update').classList.toggle('show');
+        let theDiv = document.getElementsByClassName('form-container');
+        if(contact){
+            setUpdateName(contact.name)
+            setUpdateAddress(contact.address)
+            setUpdateCity(contact.city)
+            setUpdateState(contact.state)
+            setUpdateZipCode(contact.zipCode)
+            setUpdatePhone(contact.phone)
+            setOldPhone(contact.phone)
+        }
+        console.log(theDiv)
     }
 
     return (
@@ -85,7 +126,7 @@ function App() {
                 <ol>
                     {addressBook && Object.values(addressBook).length > 0 && Object.values(addressBook).map(contact => {
                         return (
-                            <li key={contact.phone} style={{border: 'solid black 3px', margin: '5px'}}>
+                            <li key={contact.phone} id={contact.phone} style={{border: 'solid black 3px', margin: '5px'}}>
                                 <div>
                                     name: {contact.name}<br/>
                                     address: {contact.address}<br/>
@@ -95,10 +136,63 @@ function App() {
                                     phone number: {contact.phone}
                                 </div>
                                 <button onClick={() => deleteContact(contact.phone)}>Delete Contact</button>
+                                <button onClick={() => toggleUpdate(contact)}>Update</button>
                             </li>
                         )
                     })}
                 </ol>
+            </div>
+            <div id='update'
+                 className="update-contact">
+                <div className="popup-box">
+                    <h2 style={{color: 'red'}}>Popup Form</h2>
+                    <div className="form-container">
+                        <div>
+                            <label>
+                                Name:
+                            </label>
+                            <input value={updateName} onChange={e => setUpdateName(e.target.value)}/>
+                        </div>
+                        <div>
+                            <label>Address: </label>
+                            <input value={updateAddress} onChange={e => setUpdateAddress(e.target.value)}/>
+                        </div>
+                        <div>
+                            <label>City: </label>
+                            <input value={updateCity} onChange={e => setUpdateCity(e.target.value)}/>
+                        </div>
+                        <div>
+                            <label>State: </label>
+                            <input value={updateState} onChange={e => setUpdateState(e.target.value)}/>
+                        </div>
+                        <div>
+                            <label>Zip code: </label>
+                            <input value={updateZipCode} onChange={e => setUpdateZipCode(e.target.value)}/>
+                        </div>
+                        <div>
+                            <label>Phone: </label>
+                            <input value={updatePhone} onChange={e => setUpdatePhone(e.target.value)}/>
+                        </div>
+
+                        <button onClick={() => updateContact({
+                            oldPhone,
+                            updateName,
+                            updateAddress,
+                            updateCity,
+                            updateState,
+                            updateZipCode,
+                            updatePhone
+                        })} className="btn-submit"
+                                type="submit">
+                            Submit
+                        </button>
+                    </div>
+
+                    <button className="btn-close-popup"
+                            onClick={() => toggleUpdate()}>
+                        Close
+                    </button>
+                </div>
             </div>
         </>
     )
