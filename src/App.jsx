@@ -86,7 +86,6 @@ function App() {
             setUpdatePhone(contact.phone)
             setOldPhone(contact.phone)
         }
-        console.log(theDiv)
     }
 
     return (
