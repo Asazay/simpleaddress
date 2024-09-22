@@ -16,6 +16,7 @@ input{
 h1{
   color: darkred;
   -webkit-text-stroke: 1px ghostwhite;
+  margin-bottom: 0;
 }
 
 button{

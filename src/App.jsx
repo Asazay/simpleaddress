@@ -88,6 +88,7 @@ function App() {
     return (
         <>
             <h1>Simple Frontend Address Book App</h1>
+            <h4 style={{marginTop: 0}}>By Asazay Luvaiku</h4>
             <div>
                 <div>
                     <label>
