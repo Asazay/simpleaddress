@@ -3,7 +3,14 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  background-color: #555555;
+  background-color: dimgrey;
+  border: solid 1px floralwhite;
+}
+
+input{
+  border: solid 1px azure;
+  border-radius: 10px;
+  padding: 2px;
 }
 
 h1{
